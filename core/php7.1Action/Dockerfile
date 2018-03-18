@@ -1,24 +1,33 @@
-FROM php:7.1-alpine
+FROM php:7.1-jessie
 
-RUN \
-    
-    apk update && apk upgrade && \
+LABEL Name=action-php-v7.1 Version=0.0.1
 
-    # install dependencies
-   apk add \
-       postgresql-dev \
-       icu \
-       icu-libs \
-       icu-dev \
-       freetype-dev \
-       libjpeg-turbo-dev \
-       libpng-dev \
-       libxml2-dev \
+#RUN \
+#    
+#    apk update && apk upgrade && \
+#
+#    # install dependencies
+#   apk add \
+#       postgresql-dev \
+#       icu \
+#       icu-libs \
+#       icu-dev \
+#       freetype-dev \
+#       libjpeg-turbo-dev \
+#       libpng-dev \
+#       libxml2-dev \
 
-   && \
+RUN apt-get update \
+ && DEBIAN_FRONTEND=noninteractive apt-get -y install --no-install-recommends\
+        git \
+        libicu-dev \
+        libpng-dev \
+        libpq-dev \
+        libxml2-dev \
+ && rm -rf /var/lib/apt/lists/*
 
-   # install useful PHP extensions
-   docker-php-ext-install \
+# install useful PHP extensions
+RUN docker-php-ext-install \
        opcache \
        mysqli \
        pdo_mysql \
@@ -46,5 +55,5 @@ COPY router.php /action
 COPY runner.php /action
 
 # Run webserver on port 8080
-
+EXPOSE 8080
 CMD [ "php", "-S", "0.0.0.0:8080", "-d", "expose_php=0", "-d", "html_errors=0", "-d", "error_reporting=E_ALL", "/action/router.php" ]
