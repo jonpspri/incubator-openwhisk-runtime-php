@@ -38,7 +38,7 @@ elif [ "${RUNTIME_VERSION}" == "7.1" ]; then
 fi
 
 if [[ ! -z ${RUNTIME} ]]; then
-  ./gradlew --console-plain \
+  ./gradlew --console=plain \
     ":core:${RUNTIME}:distDocker" \
     -PdockerImagePrefix="${IMAGE_PREFIX}" \
     -PdockerImageTag="${IMAGE_TAG}"
