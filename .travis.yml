@@ -43,6 +43,7 @@ script:
 deploy:
 - provider: script
   script: "./tools/travis/publish.sh openwhisk ${TRAVIS_TAG%@*} ${TRAVIS_TAG##*@}"
+  skip_cleanup: true
   on:
     tags: true
     all_branches: true
