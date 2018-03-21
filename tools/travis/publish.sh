@@ -39,7 +39,7 @@ fi
 
 if [[ ! -z ${RUNTIME} ]]; then
   ./gradlew --console=plain \
-    ":core:${RUNTIME}:distDocker" \
+    ":core:${RUNTIME}:putManifestList" \
     -PdockerImagePrefix="${IMAGE_PREFIX}" \
     -PdockerImageTag="${IMAGE_TAG}"
 fi
