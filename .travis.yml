@@ -38,7 +38,7 @@ before_install:
 
 install: true
 script:
-- "./tools/travis/build.sh && ./tools/travis/deploy.sh && ./tools/travis/test.sh"
+- "./tools/travis/build.sh && ./tools/travis/test.sh"
 
 deploy:
 - provider: script

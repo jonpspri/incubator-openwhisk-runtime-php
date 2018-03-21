@@ -7,7 +7,10 @@ repositories {
     mavenLocal()
 }
 
+apply plugin: 'com.bmuschko.docker-remote-api'
+
 tasks.withType(Test) {
+    systemProperty "docker.host", docker.url
     testLogging {
         events "passed", "skipped", "failed"
         showStandardStreams = true

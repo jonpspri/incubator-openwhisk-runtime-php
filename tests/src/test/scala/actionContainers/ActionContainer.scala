@@ -37,7 +37,6 @@ import org.scalatest.FlatSpec
 import org.scalatest.Matchers
 
 import akka.actor.ActorSystem
-import common.WhiskProperties
 import spray.json._
 import whisk.core.entity.Exec
 
@@ -90,14 +89,7 @@ object ActionContainer {
   }
 
   private lazy val dockerCmd: String = {
-    val version = WhiskProperties.getProperty("whisk.version.name")
-    // Check if we are running on docker-machine env.
-    val hostStr = if (version.toLowerCase().contains("mac")) {
-      s" --host tcp://${WhiskProperties.getMainDockerEndpoint()} "
-    } else {
-      " "
-    }
-    s"$dockerBin $hostStr"
+    s"$dockerBin --host ${System.getProperty("docker.host")}"
   }
 
   private def docker(command: String): String = s"$dockerCmd $command"

@@ -30,15 +30,6 @@ IMAGE_PREFIX="testing"
 
 # Build OpenWhisk
 cd "$WHISKDIR"
-
-#pull down images
-docker pull openwhisk/controller
-docker tag openwhisk/controller ${IMAGE_PREFIX}/controller
-docker pull openwhisk/invoker
-docker tag openwhisk/invoker ${IMAGE_PREFIX}/invoker
-docker pull openwhisk/nodejs6action
-docker tag openwhisk/nodejs6action ${IMAGE_PREFIX}/nodejs6action
-
 ./gradlew --console=plain \
 :common:scala:install \
 :core:controller:install \
@@ -47,4 +38,4 @@ docker tag openwhisk/nodejs6action ${IMAGE_PREFIX}/nodejs6action
 
 # Build runtime
 cd "$ROOTDIR"
-./gradlew --console=plain -PdockerImagePrefix=${IMAGE_PREFIX}
+./gradlew --console=plain dockerBuildImage -PdockerImagePrefix=${IMAGE_PREFIX}
